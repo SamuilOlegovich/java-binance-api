@@ -16,6 +16,7 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.io.IOUtils;
+import javax.xml.bind.DatatypeConverter;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -69,7 +70,7 @@ public class BinanceRequest {
         Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
         SecretKeySpec secret_key = new SecretKeySpec(key.getBytes("UTF-8"), "HmacSHA256");
         sha256_HMAC.init(secret_key);
-        return Hex.encodeHexString(sha256_HMAC.doFinal(data.getBytes("UTF-8")));
+        return DatatypeConverter.printHexBinary(sha256_HMAC.doFinal(data.getBytes()));
     }
 
     /**
